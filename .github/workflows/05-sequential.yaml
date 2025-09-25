@@ -1,0 +1,28 @@
+name: Dependency 
+on: [push] #triggers 
+jobs: 
+# job-1 and job-4 are parallel and no dependency 
+   job-1:                  
+     runs-on: ubuntu-latest #Linux os. we can have windows or mac 
+     steps: #stages 
+      - name: step1 
+        run: echo "Hi IAM from job-1" 
+   job-2: 
+     needs: job-1 
+     runs-on: ubuntu-latest #Linux OS. we can have windows or mac 
+     steps: #stages 
+      - name: step1 
+        run: echo "Hi Iam from job-2"      
+
+   job-3: 
+      needs: job-2 
+      runs-on: ubuntu-latest #Linux OS. we can have windows or mac 
+      steps: #stages 
+        - name: step1 
+          run: echo "Hi Iam from job-3" 
+
+   job-4: 
+      runs-on: ubuntu-latest #Linux os. we can have windows or mac 
+      steps: #stages 
+         - name: step1 
+           run: echo "Hi iam from job-4"            
