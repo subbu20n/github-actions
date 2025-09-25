@@ -3,7 +3,7 @@ on:
   workflow_dispatch: #triggers manually 
     inputs: 
       logLevel: 
-         description: 'log level' 
+         description: 'Log level' 
          required: true 
          default: 'warning' 
          type: 'choice' 
