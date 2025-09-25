@@ -7,6 +7,10 @@ on:
          required: true 
          default: 'warning' 
          type: 'choice' 
+         options: 
+           - info 
+           - warning 
+           - debug 
       print_tags: 
          description: 'True to print to STDOUT' 
          required: true 
