@@ -1,0 +1,29 @@
+name: INPUTS 
+on: 
+  workflow_dispatch: #triggers manually 
+    inputs: 
+      logLevel: 
+         description: 'log level' 
+         required: true 
+         default: 'warning' 
+         type: 'choice' 
+      print_tags: 
+         description: 'True to print to STDOUT' 
+         required: true 
+         type: 'boolean' 
+      tags: 
+         description: 'Test scenario tags' 
+         required: true 
+         type: 'string' 
+      environments: 
+         descrition: 'Environment to run test against' 
+         required: true 
+         type: 'environment' 
+jobs: 
+   print-tag: 
+     runs-on: ubuntu-latest #linux os. we can have windows or mac 
+     steps: #stages 
+       - name: print the input tag to STDOUT 
+         run: echo The tags are ${{ inputs.tag }} 
+       - name: print the environment 
+         run: echo The tags are ${{ inputs.environment }}
