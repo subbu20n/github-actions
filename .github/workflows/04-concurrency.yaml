@@ -1,0 +1,12 @@
+name: Concurrency 
+on: [push] #triggers 
+concurrency: 
+# this workflow should be triggers for any branch only one 
+ group: ${{ github.workflow }} - ${{ github.ref }} 
+ cancel-in-progress: true 
+jobs: 
+  hello: 
+    runs-on: ubuntu-latest #Linux os. we can have windows or mac 
+    steps: #stages 
+      - name: step1 
+        run: sleep 20  
