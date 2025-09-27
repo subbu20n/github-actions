@@ -1,0 +1,10 @@
+name: self-hosted-runner 
+on: [push] #triggers 
+jobs: 
+   hello: #job-name  
+      runs-on: self-hosted 
+      steps: #stages 
+      - name: step1 
+        run: echo "Hello World" 
+      - name: step2 
+        run: echo "Hello Github Actions"   
