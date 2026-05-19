@@ -17,8 +17,8 @@ jobs:
         run: |
           echo "Running build..."
           exit 1   # simulate failure
-
-      # -------------------------
+ 
+      # -------------------------  
       # POST SECTION (Jenkins style)
       # -------------------------
 
