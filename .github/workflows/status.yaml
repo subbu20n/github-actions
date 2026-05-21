@@ -16,6 +16,7 @@ jobs:
       - name: Run build
         run: |
           echo "Running build..." 
+           exit 1   # simulate failure  #[intentionally kept failure here ok ]
          
  
       # -------------------------  
