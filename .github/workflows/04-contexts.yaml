@@ -1,0 +1,79 @@
+name: Contexts demo
+on: [push] # Triggers the workflow on every push to the repository
+
+env:
+  project: "roboshop"
+  component: "catalogue"
+  environment: "dev"
+jobs:
+  # Job name
+  github-context:
+    runs-on: ubuntu-latest # Github hosted runners
+    outputs:  # This exposes values from step "tag" to other jobs.
+      image-name: ${{ steps.tag.outputs.image-name }}  # we will use these for other jobs like terraform o/ps 
+      image-version: ${{ steps.tag.outputs.version }}
+    steps:
+      - name: print info
+        run: |
+          echo "${{ toJson(github) }}" # The command to execute Prints complete GitHub event information as JSON.
+          echo "branch name: ${{ github.ref_name }}"   #Prints current branch name.
+
+      - name: access env variables   #Global env variables ni use chestunnaru.
+        run: |
+          echo "Project: $project"
+          echo "Component: $component"
+          echo "Environment: $environment"
+
+      - name: print secrets      #Repo Settings → Secrets and Variables → we need to store this in github 
+        run: |
+          echo "DB User name: ${{ secrets.DB_USER }}"
+          echo "DB password: ${{ secrets.DB_PASSWORD }}"
+
+        
+      - name: print variables   #Repository variables ni access chestunnaru.
+        run: |
+          echo "DB URL: ${{ vars.DB_URL }}"    
+
+
+      - name: image tag
+        id: tag # id is mandatory to access the output of this step in later steps
+        run: |
+          echo "version=1.0.0" >> $GITHUB_OUTPUT   #####Current step nundi outputs create chestundi.
+          echo "image-name=catalogue" >> $GITHUB_OUTPUT 
+
+      - name: print previous step output  #Reads outputs from previous step (tag)
+        run: |
+          echo "Image name: ${{ steps.tag.outputs.image-name }}"
+          echo "Version: ${{ steps.tag.outputs.version }}"
+
+      # useful with in the job
+      - name: github env   ####Same job lo next steps ki dynamic env variables create chestundi.
+        run: |
+          echo "Course=github-actions" >> $GITHUB_ENV
+          echo "Duration=5hours" >> $GITHUB_ENV
+
+      - name: print github env   ####GITHUB_ENV dvara create chesina variables ni print chestundi.
+        run: |
+          echo "Course: $Course"
+          echo "Duration: $Duration"
+
+  deploy:         ####Deploy starts only after github-context completes successfully.  ##job-2
+    needs: github-context # means depends on above job
+    runs-on: ubuntu-latest # Github hosted runners
+    steps:
+      - name: print github env in another job   ###Vere job outputs ni access chestundi.
+        run: |
+          echo "Image Name: ${{ needs.github-context.outputs.image-name }}"
+          echo "Image Version: ${{ needs.github-context.outputs.image-version }}"
+
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: run sonar scan
+      run: echo "Sonar Scan"
+
+    - name: print job Contexts
+      run: echo "${{ toJson(job) }}" 
+
+    - name: print runner Contexts
+      run: echo "${{ toJson(runner) }}"
