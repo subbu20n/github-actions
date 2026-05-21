@@ -9,13 +9,13 @@ jobs:
     steps:
       # -------------------------
       # Main job steps
-      # -------------------------
+      # -------------------------   
       - name: Checkout
         run: echo "Cloning repo..."
 
       - name: Run build
         run: |
-          echo "Running build..."
+          echo "Running build..." 
           exit 1   # simulate failure
  
       # -------------------------  
