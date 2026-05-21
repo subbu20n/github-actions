@@ -20,7 +20,7 @@ jobs:
   # Job name
   trigger:
     runs-on: ubuntu-latest # Github hosted runners
-    steps:
+    steps: 
       - name: print inputs
         run: |
           echo "Log level: ${{ inputs.logLevel }}"
