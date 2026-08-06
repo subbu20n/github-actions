@@ -11,8 +11,8 @@ outputs:
     value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: "composite" # shell commands
-  steps:
-    - name: Set Greeting
+  steps:    
+    - name: Set Greeting      
       run: echo "Hello $INPUT_WHO_TO_GREET."
       shell: bash
       env:
